@@ -1,0 +1,93 @@
+.dashboard {
+  min-height: calc(100vh - 136px);
+  padding: 64px 40px;
+  background-image:
+    linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.75) 100%,
+      rgba(23, 16, 2, 0.45) 75%,
+      rgba(23, 16, 2, 0.82) 50%,
+      rgba(23, 14, 2, 0.96) 0%
+    ),
+    url("../../images/Red_Dragon_5eR.webp");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.dashboard__header {
+  max-width: 1180px;
+  margin: 0 auto 40px;
+  display: flex;
+  justify-content: space-between;
+  gap: 32px;
+  align-items: flex-end;
+}
+
+.dashboard__subtitle {
+  margin: 0 0 12px;
+  color: #d6b14a;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.dashboard__title {
+  margin: 0 0 16px;
+  color: #ffffff;
+  font-size: 44px;
+  line-height: 1.1;
+}
+
+.dashboard__description {
+  margin: 0;
+  max-width: 620px;
+  color: #cbd5e1;
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+.dashboard__button {
+  min-width: 170px;
+  min-height: 48px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #d6b14a, #9f7928);
+  color: #111827;
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.dashboard__button:hover {
+  opacity: 0.85;
+  color: rgb(255, 255, 255);
+}
+
+.dashboard__list {
+  max-width: 1180px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+@media screen and (max-width: 720px) {
+  .dashboard {
+    padding: 40px 20px;
+  }
+
+  .dashboard__header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .dashboard__title {
+    font-size: 36px;
+  }
+
+  .dashboard__button {
+    width: 100%;
+  }
+}

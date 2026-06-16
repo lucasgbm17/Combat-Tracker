@@ -1,0 +1,91 @@
+.login {
+  width: 100%;
+  padding: 25px;
+  border: 1px solid rgba(23, 2, 2, 0.96);
+  border-radius: 40px;
+  background: linear-gradient(
+    180deg,
+    rgba(42, 15, 15, 0.92),
+    rgba(2, 6, 23, 0.9)
+  );
+  box-shadow:
+    0 24px 80px rgba(85, 11, 11, 0.55),
+    inset 0 1px 0 rgba(0, 38, 255, 0.06);
+  backdrop-filter: blur(10px);
+}
+
+.login__title {
+  margin: 0 0 26px;
+  color: #ffffff;
+  font-size: 26px;
+  line-height: 1.2;
+}
+
+.login__label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 18px;
+  color: #cbd5e1;
+  font-size: 18px;
+}
+
+.login__input {
+  height: 48px;
+  padding: 0 14px;
+  border: 1px solid rgba(6, 45, 99, 0.32);
+  border-radius: 10px;
+  color: #000000;
+  font-size: 18px;
+  outline: none;
+}
+
+.login__input::placeholder {
+  color: #64748b;
+}
+
+.login__button {
+  width: 100%;
+  min-height: 50px;
+  margin-top: 10px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #d6b14a, #9f7928);
+  color: #ffffff;
+  font-size: 28px;
+  font-weight: 800;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.login__button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 28px rgba(214, 177, 74, 0.24);
+}
+
+.login__text {
+  margin: 22px 0 0;
+  color: #94a3b8;
+  font-size: 14px;
+  text-align: center;
+}
+
+.login__register-button {
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  color: #d6b14a;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.login__register-button:hover {
+  text-decoration: underline;
+}

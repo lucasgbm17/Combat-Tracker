@@ -1,0 +1,25 @@
+.header {
+  min-height: 72px;
+  padding: 0 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #000000;
+  border-bottom: 5px solid rgba(255, 187, 0, 0.18);
+}
+
+.header__logo {
+  margin: 0;
+  color: #ffffff;
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: 0.4px;
+}
+
+@media screen and (max-width: 700px) {
+  .header {
+    padding: 20px;
+    flex-direction: column;
+    gap: 16px;
+  }
+}

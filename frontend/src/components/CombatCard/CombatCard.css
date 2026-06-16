@@ -1,0 +1,102 @@
+.combat-card {
+  min-height: 310px;
+  padding: 26px;
+  border: 1px solid rgba(214, 177, 74, 0.28);
+  border-radius: 18px;
+  background: linear-gradient(
+    180deg,
+    rgba(15, 23, 42, 0.94),
+    rgba(17, 2, 2, 0.96)
+  );
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.35);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.combat-card__label {
+  margin: 0 0 14px;
+  color: #d6b14a;
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+.combat-card__title {
+  margin: 0 0 14px;
+  color: #ffffff;
+  font-size: 24px;
+  line-height: 1.2;
+}
+
+.combat-card__description {
+  margin: 0 0 24px;
+  color: #cbd5e1;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.combat-card__stats {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.combat-card__stat {
+  padding: 12px;
+  border-radius: 12px;
+  background-color: rgba(15, 23, 42, 0.82);
+  color: #94a3b8;
+  font-size: 12px;
+  text-align: center;
+}
+
+.combat-card__stat span {
+  display: block;
+  margin-bottom: 4px;
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.combat-card__actions {
+  margin-top: 28px;
+  display: flex;
+  gap: 12px;
+}
+
+.combat-card__open-button,
+.combat-card__delete-button {
+  min-height: 42px;
+  padding: 0 16px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.combat-card__open-button {
+  flex: 1;
+  background: linear-gradient(135deg, #d6b14a, #9f7928);
+  color: #111827;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.combat-card__delete-button {
+  border: 1px solid rgba(255, 0, 0, 0.38);
+  background: linear-gradient(135deg, #d64a4a, #9f2828);
+  color: #000000ad;
+}
+
+.combat-card__open-button:hover,
+.combat-card__delete-button:hover {
+  color: #ffff;
+  opacity: 0.85;
+}
