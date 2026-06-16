@@ -5,11 +5,11 @@
   border-radius: 40px;
   background: linear-gradient(
     180deg,
-    rgba(42, 15, 15, 0.92),
-    rgba(2, 6, 23, 0.9)
+    rgba(46, 10, 10, 0.92),
+    rgba(0, 0, 0, 0.9)
   );
   box-shadow:
-    0 24px 80px rgba(85, 11, 11, 0.55),
+    0 24px 80px rgba(160, 96, 1, 0.55),
     inset 0 1px 0 rgba(0, 38, 255, 0.06);
   backdrop-filter: blur(10px);
 }

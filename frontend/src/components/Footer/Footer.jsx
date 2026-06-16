@@ -3,7 +3,7 @@ import "./Footer.css";
 function Footer() {
   return (
     <footer className="footer">
-      <p>© 2026 DnD Combat Tracker. Um oferecimento dos Pipers</p>
+      <p>© 2026 Combat Tracker. Um oferecimento Pipers - Lucas Galuppo</p>
     </footer>
   );
 }

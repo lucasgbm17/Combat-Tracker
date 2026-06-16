@@ -5,9 +5,9 @@
     linear-gradient(
       90deg,
       rgba(23, 2, 2, 0.96) 0%,
-      rgba(2, 6, 23, 0.82) 50%,
-      rgba(2, 6, 23, 0.45) 75%,
-      rgba(2, 6, 23, 0.75) 100%
+      rgba(0, 0, 0, 0.65) 50%,
+      rgba(23, 13, 2, 0.45) 75%,
+      rgba(23, 20, 2, 0.75) 100%
     ),
     url("../../images/main-bg.png");
   background-size: cover;
@@ -51,7 +51,7 @@
   margin: 0 0 34px;
   max-width: 800px;
   color: #cbd5e1;
-  font-size: 18px;
+  font-size: 14px;
   line-height: 1.7;
 }
 
@@ -65,7 +65,7 @@
 
 .main__feature {
   color: #f8fafc;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 1.4;
 }
 

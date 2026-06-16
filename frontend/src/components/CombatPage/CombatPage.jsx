@@ -7,8 +7,7 @@ function CombatPage() {
         <p className="combat-page__subtitle">Controle de combate</p>
         <h2 className="combat-page__title">Covil dos Lobisomens</h2>
         <p className="combat-page__description">
-          Aqui ficarão os jogadores, monstros, iniciativa, pontos de vida e
-          controle de turnos.
+          Devs também precisam descansar...
         </p>
       </section>
     </main>

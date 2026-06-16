@@ -9,7 +9,7 @@ function About() {
         <h2 className="about__title">Uma ferramenta para Mestres de RPG</h2>
 
         <p className="about__text">
-          O DnD Combat Tracker é uma aplicação web criada, como projeto final da
+          O Combat Tracker é uma aplicação web criada, como projeto final da
           TripleTen, para auxiliar Mestres de RPG no gerenciamento de combates,
           organizando jogadores, monstros, pontos de vida, iniciativa e turnos
           em uma única interface.

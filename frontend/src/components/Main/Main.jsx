@@ -21,7 +21,7 @@ function Main() {
             <li className="main__feature">Adicione jogadores e monstros</li>
             <li className="main__feature">Controle HP, turnos e iniciativa</li>
             <li className="main__feature">
-              Adicione monstros com todas informações necessárias
+              Adicione monstros com todas informações
             </li>
           </ul>
         </div>
