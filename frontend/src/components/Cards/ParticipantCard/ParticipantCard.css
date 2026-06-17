@@ -8,6 +8,8 @@
   grid-template-columns: 100px 1fr 150px 250px;
   gap: 5px;
   align-items: center;
+  position: relative;
+  overflow: visible;
 }
 
 .participant-card_active {
@@ -169,25 +171,26 @@
 
 .participant-card__stat span {
   display: block;
-  margin-bottom: 4px;
+  margin: 4px;
   color: #ffffff;
-  font-size: 20px;
+  font-size: 15px;
   font-weight: 900;
 }
 
 .participant-card__actions {
-  display: flex;
-  gap: 10px;
+  padding: 0 20px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
 }
 
 .participant-card__button {
-  flex: 1;
-  min-height: 40px;
+  min-height: 38px;
   border: none;
   border-radius: 10px;
   background-color: #7f1d1d;
   color: #ffffff;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 800;
   cursor: pointer;
 }
@@ -198,6 +201,37 @@
 
 .participant-card__button:hover {
   opacity: 0.75;
+}
+
+.participant-card__delete-button {
+  position: absolute;
+  top: -1px;
+  right: -1px;
+  width: 40px;
+  height: 40px;
+  border: 2px solid rgba(122, 26, 26, 0.7);
+  border-radius: 45%;
+  background-color: rgba(138, 27, 27);
+  color: #c5c5c5;
+  font-size: 16px;
+  line-height: 1;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.participant-card__delete-button:hover {
+  transform: scale(1.08);
+  background-color: #991b1b;
+  border-color: #fca5a5;
+  color: #ffffff;
 }
 
 @media screen and (max-width: 1020px) {

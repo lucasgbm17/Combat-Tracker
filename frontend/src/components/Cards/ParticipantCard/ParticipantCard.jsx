@@ -5,6 +5,7 @@ function ParticipantCard({
   isActive,
   onDamageParticipant,
   onHealParticipant,
+  onDeleteParticipant,
 }) {
   const healthPercentage = Math.max(
     0,
@@ -104,6 +105,13 @@ function ParticipantCard({
           />
         </div>
       </div>
+      <button
+        className="participant-card__delete-button"
+        type="button"
+        onClick={() => onDeleteParticipant(participant.id)}
+      >
+        X
+      </button>
     </article>
   );
 }

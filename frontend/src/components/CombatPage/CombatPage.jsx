@@ -262,6 +262,58 @@ function CombatPage() {
     ]);
   }
 
+  //Remover Participante
+  function handleDeleteParticipant(participantId) {
+    const participantToDelete = participants.find(
+      (participant) => participant.id === participantId,
+    );
+
+    if (!participantToDelete) {
+      return;
+    }
+
+    const confirmDelete = window.confirm(
+      `Tem certeza que deseja remover ${participantToDelete.name} do combate?`,
+    );
+
+    if (!confirmDelete) {
+      return;
+    }
+
+    const activeParticipantId = activeParticipant?.id;
+
+    const updatedParticipants = participants.filter(
+      (participant) => participant.id !== participantId,
+    );
+
+    setParticipants(updatedParticipants);
+
+    if (updatedParticipants.length === 0) {
+      setCurrentTurnIndex(0);
+      setRound(1);
+      return;
+    }
+
+    const sortedUpdatedParticipants = [...updatedParticipants].sort(
+      (a, b) => b.initiative - a.initiative,
+    );
+
+    if (participantId === activeParticipantId) {
+      setCurrentTurnIndex((currentIndex) =>
+        Math.min(currentIndex, sortedUpdatedParticipants.length - 1),
+      );
+      return;
+    }
+
+    const newActiveParticipantIndex = sortedUpdatedParticipants.findIndex(
+      (participant) => participant.id === activeParticipantId,
+    );
+
+    setCurrentTurnIndex(
+      newActiveParticipantIndex >= 0 ? newActiveParticipantIndex : 0,
+    );
+  }
+
   return (
     <main className="combat-page">
       <section className="combat-page__hero">
@@ -347,6 +399,7 @@ function CombatPage() {
               isActive={activeParticipant?.id === participant.id}
               onDamageParticipant={handleDamageParticipant}
               onHealParticipant={handleHealParticipant}
+              onDeleteParticipant={handleDeleteParticipant}
             />
           ))}
         </div>
