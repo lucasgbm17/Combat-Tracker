@@ -74,6 +74,75 @@ function CombatPage() {
     setIsMonsterSearchOpen((currentValue) => !currentValue);
   }
 
+  //Monstro--------------------------------------------------------------------------------------------------------------------
+  function getMonsterArmorClass(monster) {
+    return monster.armor_class?.[0]?.value || 10;
+  }
+
+  function getMonsterSpeed(monster) {
+    const rawSpeed =
+      monster.speed?.walk ||
+      monster.speed?.fly ||
+      monster.speed?.swim ||
+      "30 ft.";
+
+    const parsedSpeed = Number.parseInt(rawSpeed, 10);
+
+    if (Number.isNaN(parsedSpeed)) {
+      return 30;
+    }
+
+    return parsedSpeed;
+  }
+
+  function handleAddMonsterFromApi(monster) {
+    const initiativeValue = window.prompt(`Iniciativa de ${monster.name}:`);
+
+    if (!initiativeValue) {
+      return;
+    }
+
+    const initiative = Number(initiativeValue);
+
+    if (Number.isNaN(initiative)) {
+      window.alert("Digite uma iniciativa válida.");
+      return;
+    }
+
+    const activeParticipantId = activeParticipant?.id;
+
+    const newMonster = {
+      id: `m-${monster.index}-${Date.now()}`,
+      name: monster.name,
+      type: "monster",
+      armorClass: getMonsterArmorClass(monster),
+      currentHp: monster.hit_points || 1,
+      maxHp: monster.hit_points || 1,
+      initiative,
+      speed: getMonsterSpeed(monster),
+      challengeRating: monster.challenge_rating,
+      apiIndex: monster.index,
+    };
+
+    const updatedParticipants = [...participants, newMonster];
+
+    const sortedUpdatedParticipants = [...updatedParticipants].sort(
+      (a, b) => b.initiative - a.initiative,
+    );
+
+    setParticipants(updatedParticipants);
+
+    if (activeParticipantId) {
+      const newActiveIndex = sortedUpdatedParticipants.findIndex(
+        (participant) => participant.id === activeParticipantId,
+      );
+
+      setCurrentTurnIndex(newActiveIndex >= 0 ? newActiveIndex : 0);
+    }
+
+    setIsMonsterSearchOpen(false);
+  }
+
   //Próximo Turno--------------------------------------------------------------------------------------------------------------
   function handleNextTurn() {
     if (sortedParticipants.length === 0) {
@@ -250,7 +319,9 @@ function CombatPage() {
         </div>
       </section>
 
-      {isMonsterSearchOpen && <MonsterSearch />}
+      {isMonsterSearchOpen && (
+        <MonsterSearch onAddMonster={handleAddMonsterFromApi} />
+      )}
 
       <section className="combat-page__initiative">
         <div className="combat-page__initiative-header">
