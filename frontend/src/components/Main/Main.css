@@ -1,6 +1,7 @@
 .main {
   width: 100%;
-  padding: 80px 40px;
+  min-height: calc(100vh - 144px);
+  padding: clamp(40px, 6vw, 80px) clamp(20px, 4vw, 40px);
   background-image:
     linear-gradient(
       90deg,
@@ -16,11 +17,12 @@
 }
 
 .main__section {
+  max-width: 1600px;
   min-height: calc(100vh - 300px);
-  margin: 0 200px;
+  margin: 0 auto;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 450px;
-  gap: 200px;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 450px);
+  gap: clamp(40px, 8vw, 140px);
   align-items: center;
 }
 
@@ -32,7 +34,7 @@
 .main__subtitle {
   margin: 0 0 18px;
   color: #d68e4a;
-  font-size: 24px;
+  font-size: clamp(16px, 2vw, 24px);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 2px;
@@ -42,8 +44,8 @@
   margin: 0 0 24px;
   max-width: 955px;
   color: #ffffff;
-  font-size: 50px;
-  line-height: 0.98;
+  font-size: clamp(36px, 5vw, 58px);
+  line-height: 1;
   font-weight: 800;
 }
 
@@ -51,7 +53,7 @@
   margin: 0 0 34px;
   max-width: 800px;
   color: #cbd5e1;
-  font-size: 14px;
+  font-size: clamp(14px, 1.5vw, 17px);
   line-height: 1.7;
 }
 
@@ -76,31 +78,18 @@
 }
 
 @media screen and (max-width: 960px) {
-  .main {
-    padding: 56px 24px;
-    background-position: center;
-  }
-
-  .main__hero {
+  .main__section {
     grid-template-columns: 1fr;
     gap: 40px;
-  }
-
-  .main__title {
-    font-size: 46px;
   }
 }
 
 @media screen and (max-width: 560px) {
   .main {
-    padding: 40px 16px;
+    padding: 36px 16px;
   }
 
-  .main__title {
-    font-size: 36px;
-  }
-
-  .main__description {
-    font-size: 16px;
+  .main__features {
+    gap: 10px;
   }
 }

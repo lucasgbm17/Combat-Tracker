@@ -44,7 +44,7 @@
 }
 
 .participant-card__main {
-  min-width: 250px;
+  min-width: 0;
 }
 
 .participant-card__header {
@@ -174,34 +174,59 @@
 
 @media screen and (max-width: 1020px) {
   .participant-card {
-    grid-template-columns: 72px 1fr;
+    grid-template-columns: 90px 1fr;
+    padding: 18px;
+    border-radius: 32px;
   }
 
   .participant-card__stats,
-  .participant-card__actions {
+  .participant-card__actions,
+  .participant-card__health {
     grid-column: 2;
+  }
+
+  .participant-card__main {
+    min-width: 0;
   }
 }
 
-@media screen and (max-width: 620px) {
+@media screen and (max-width: 700px) {
   .participant-card {
     grid-template-columns: 1fr;
+    border-radius: 24px;
   }
 
   .participant-card__initiative {
+    grid-row: auto;
     width: 100%;
     height: auto;
-    padding: 14px;
+    min-height: 54px;
+    padding: 12px;
     flex-direction: row;
     gap: 8px;
   }
 
+  .participant-card__main,
   .participant-card__stats,
-  .participant-card__actions {
+  .participant-card__actions,
+  .participant-card__health {
     grid-column: auto;
+  }
+
+  .participant-card__header {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .participant-card__stats {
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .participant-card__actions {
     flex-direction: column;
+  }
+
+  .participant-card__button {
+    width: 100%;
   }
 }

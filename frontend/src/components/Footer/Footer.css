@@ -7,4 +7,19 @@
   justify-content: space-between;
   background-color: #000000;
   border-top: 5px solid rgba(255, 187, 0, 0.18);
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.footer p {
+  margin: 0;
+}
+
+@media screen and (max-width: 700px) {
+  .footer {
+    min-height: auto;
+    padding: 20px;
+    justify-content: center;
+    text-align: center;
+  }
 }
