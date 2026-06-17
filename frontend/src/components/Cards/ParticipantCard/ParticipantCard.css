@@ -118,7 +118,27 @@
 .participant-card__health-fill {
   height: 100%;
   border-radius: inherit;
+  transition:
+    width 0.25s ease-in-out,
+    background 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.participant-card__health-fill_light {
   background: linear-gradient(90deg, #166534, #22c55e);
+}
+
+.participant-card__health-fill_moderate {
+  background: linear-gradient(90deg, #a16207, #facc15);
+}
+
+.participant-card__health-fill_heavy {
+  background: linear-gradient(90deg, #991b1b, #ef4444);
+}
+
+.participant-card__health-fill_critical {
+  background: linear-gradient(90deg, #450a0a, #941818);
+  box-shadow: 0 0 12px rgba(220, 38, 38);
 }
 
 .participant-card__stats {
@@ -137,6 +157,14 @@
   color: #94a3b8;
   font-size: 12px;
   text-align: center;
+}
+
+.participant-card__stat_shield {
+  background: linear-gradient(180deg, #d1d1cf 5%, #7c7c7a 42%, #4b4b4b 95%);
+  color: #111827;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
 }
 
 .participant-card__stat span {

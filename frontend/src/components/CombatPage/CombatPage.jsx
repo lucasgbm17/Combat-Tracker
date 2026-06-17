@@ -1,71 +1,148 @@
+import { useState } from "react";
 import ParticipantCard from "../Cards/ParticipantCard/ParticipantCard";
 import MonsterSearch from "../MonsterSearch/MonsterSearch";
 import "./CombatPage.css";
 
+//Temporário
+const initialParticipants = [
+  {
+    id: "p1",
+    name: "Sócrates Riverdeep",
+    type: "player",
+    armorClass: 16,
+    currentHp: 72,
+    maxHp: 72,
+    initiative: 18,
+    speed: 30,
+  },
+  {
+    id: "p2",
+    name: "Capa Barsavi",
+    type: "player",
+    armorClass: 18,
+    currentHp: 64,
+    maxHp: 64,
+    initiative: 15,
+    speed: 30,
+  },
+  {
+    id: "p3",
+    name: "Skidbladnir",
+    type: "player",
+    armorClass: 17,
+    currentHp: 58,
+    maxHp: 58,
+    initiative: 21,
+    speed: 30,
+  },
+  {
+    id: "m1",
+    name: "Werewolf",
+    type: "monster",
+    armorClass: 12,
+    currentHp: 58,
+    maxHp: 58,
+    initiative: 14,
+    speed: 30,
+  },
+  {
+    id: "m2",
+    name: "Dire Wolf",
+    type: "monster",
+    armorClass: 14,
+    currentHp: 37,
+    maxHp: 37,
+    initiative: 12,
+    speed: 50,
+  },
+];
+
 function CombatPage() {
-  const participants = [
-    {
-      id: "p1",
-      name: "Sócrates Riverdeep",
-      type: "player",
-      description: "Firbolg Druida da Lua",
-      armorClass: 16,
-      currentHp: 72,
-      maxHp: 72,
-      initiative: 18,
-      speed: 30,
-    },
-    {
-      id: "p2",
-      name: "Capa Barsavi",
-      type: "player",
-      description: "Clérigo de Tyr",
-      armorClass: 18,
-      currentHp: 64,
-      maxHp: 64,
-      initiative: 15,
-      speed: 30,
-    },
-    {
-      id: "p3",
-      name: "Skidbladnir",
-      type: "player",
-      description: "Ladino Soulknife",
-      armorClass: 17,
-      currentHp: 58,
-      maxHp: 58,
-      initiative: 21,
-      speed: 30,
-    },
-    {
-      id: "m1",
-      name: "Werewolf",
-      type: "monster",
-      description: "Humanoide amaldiçoado pela licantropia",
-      armorClass: 12,
-      currentHp: 58,
-      maxHp: 58,
-      initiative: 14,
-      speed: 30,
-    },
-    {
-      id: "m2",
-      name: "Dire Wolf",
-      type: "monster",
-      description: "Lobo gigante de comportamento agressivo",
-      armorClass: 14,
-      currentHp: 37,
-      maxHp: 37,
-      initiative: 12,
-      speed: 50,
-    },
-  ];
+  const [participants, setParticipants] = useState(initialParticipants);
+  const [currentTurnIndex, setCurrentTurnIndex] = useState(0);
+  const [round, setRound] = useState(1);
 
   const sortedParticipants = [...participants].sort(
     (a, b) => b.initiative - a.initiative,
   );
 
-  const activeParticipant = sortedParticipants[1];
+  const activeParticipant = sortedParticipants[currentTurnIndex];
+
+  //Próximo Turno
+  function handleNextTurn() {
+    if (sortedParticipants.length === 0) {
+      return;
+    }
+
+    const nextTurnIndex = currentTurnIndex + 1;
+
+    if (nextTurnIndex >= sortedParticipants.length) {
+      setCurrentTurnIndex(0);
+      setRound(round + 1);
+      return;
+    }
+
+    setCurrentTurnIndex(nextTurnIndex);
+  }
+
+  //Adicionar Dano
+  function handleDamageParticipant(participantId) {
+    const damageValue = window.prompt("Digite o valor do dano:");
+
+    if (!damageValue) {
+      return;
+    }
+
+    const parsedDamage = Number(damageValue);
+
+    if (Number.isNaN(parsedDamage) || parsedDamage <= 0) {
+      return;
+    }
+
+    setParticipants((currentParticipants) =>
+      currentParticipants.map((participant) => {
+        if (participant.id !== participantId) {
+          return participant;
+        }
+
+        return {
+          ...participant,
+          currentHp: Math.max(0, participant.currentHp - parsedDamage),
+        };
+      }),
+    );
+  }
+
+  //Adicionar Cura
+  function handleHealParticipant(participantId) {
+    const healValue = window.prompt("Digite o valor da cura:");
+
+    if (!healValue) {
+      return;
+    }
+
+    const parsedHeal = Number(healValue);
+
+    if (Number.isNaN(parsedHeal) || parsedHeal <= 0) {
+      return;
+    }
+
+    setParticipants((currentParticipants) =>
+      currentParticipants.map((participant) => {
+        if (participant.id !== participantId) {
+          return participant;
+        }
+
+        return {
+          ...participant,
+          currentHp: Math.min(
+            participant.maxHp,
+            participant.currentHp + parsedHeal,
+          ),
+        };
+      }),
+    );
+  }
 
   return (
     <main className="combat-page">
@@ -81,6 +158,8 @@ function CombatPage() {
           </p>
         </div>
       </section>
+
+      <MonsterSearch />
 
       <section className="combat-page__controls">
         <div className="combat-page__actions">
@@ -98,26 +177,26 @@ function CombatPage() {
           <button
             className="combat-page__button combat-page__button_next"
             type="button"
+            onClick={handleNextTurn}
           >
             Próximo turno
           </button>
         </div>
+
         <div className="combat-page__status">
           <div className="combat-page__status-card">
-            <span className="combat-page__status-number">1</span>
+            <span className="combat-page__status-number">{round}</span>
             <span className="combat-page__status-label">Rodada</span>
           </div>
 
           <div className="combat-page__status-card combat-page__status-card_wide">
             <span className="combat-page__status-number">
-              {activeParticipant.name}
+              {activeParticipant ? activeParticipant.name : "Sem participantes"}
             </span>
             <span className="combat-page__status-label">Turno atual</span>
           </div>
         </div>
       </section>
-
-      <MonsterSearch />
 
       <section className="combat-page__initiative">
         <div className="combat-page__initiative-header">
@@ -140,7 +219,9 @@ function CombatPage() {
             <ParticipantCard
               key={participant.id}
               participant={participant}
-              isActive={participant.id === activeParticipant.id}
+              isActive={activeParticipant?.id === participant.id}
+              onDamageParticipant={handleDamageParticipant}
+              onHealParticipant={handleHealParticipant}
             />
           ))}
         </div>

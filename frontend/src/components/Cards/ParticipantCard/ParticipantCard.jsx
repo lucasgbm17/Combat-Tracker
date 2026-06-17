@@ -1,10 +1,32 @@
 import "./ParticipantCard.css";
 
-function ParticipantCard({ participant, isActive }) {
+function ParticipantCard({
+  participant,
+  isActive,
+  onDamageParticipant,
+  onHealParticipant,
+}) {
   const healthPercentage = Math.max(
     0,
     Math.min(100, (participant.currentHp / participant.maxHp) * 100),
   );
+
+  //Health Status
+  function getHealthStatusClass() {
+    if (healthPercentage <= 10) {
+      return "participant-card__health-fill_critical";
+    }
+
+    if (healthPercentage <= 40) {
+      return "participant-card__health-fill_heavy";
+    }
+
+    if (healthPercentage <= 70) {
+      return "participant-card__health-fill_moderate";
+    }
+
+    return "participant-card__health-fill_light";
+  }
 
   return (
     <article
@@ -16,7 +38,7 @@ function ParticipantCard({ participant, isActive }) {
         <span className="participant-card__initiative-number">
           {participant.initiative}
         </span>
-        <span className="participant-card__initiative-text">Init</span>
+        <span className="participant-card__initiative-label">Init</span>
       </div>
 
       <div className="participant-card__main">
@@ -38,9 +60,9 @@ function ParticipantCard({ participant, isActive }) {
       </div>
 
       <ul className="participant-card__stats">
-        <li className="participant-card__stat">
+        <li className="participant-card__stat participant-card__stat_shield">
           <span>{participant.armorClass}</span>
-          AC
+          CA
         </li>
 
         <li className="participant-card__stat">
@@ -50,13 +72,18 @@ function ParticipantCard({ participant, isActive }) {
       </ul>
 
       <div className="participant-card__actions">
-        <button className="participant-card__button" type="button">
+        <button
+          className="participant-card__button"
+          type="button"
+          onClick={() => onDamageParticipant(participant.id)}
+        >
           Dano
         </button>
 
         <button
           className="participant-card__button participant-card__button_heal"
           type="button"
+          onClick={() => onHealParticipant(participant.id)}
         >
           Cura
         </button>
@@ -72,7 +99,7 @@ function ParticipantCard({ participant, isActive }) {
 
         <div className="participant-card__health-bar">
           <div
-            className="participant-card__health-fill"
+            className={`participant-card__health-fill ${getHealthStatusClass()}`}
             style={{ width: `${healthPercentage}%` }}
           />
         </div>
