@@ -61,12 +61,18 @@ function CombatPage() {
   const [participants, setParticipants] = useState(initialParticipants);
   const [currentTurnIndex, setCurrentTurnIndex] = useState(0);
   const [round, setRound] = useState(1);
+  const [isMonsterSearchOpen, setIsMonsterSearchOpen] = useState(false);
 
   const sortedParticipants = [...participants].sort(
     (a, b) => b.initiative - a.initiative,
   );
 
   const activeParticipant = sortedParticipants[currentTurnIndex];
+
+  //Abrir/Fechar Monster Search------------------------------------------------------------------------------------------------
+  function handleToggleMonsterSearch() {
+    setIsMonsterSearchOpen((currentValue) => !currentValue);
+  }
 
   //Próximo Turno--------------------------------------------------------------------------------------------------------------
   function handleNextTurn() {
@@ -202,8 +208,6 @@ function CombatPage() {
         </div>
       </section>
 
-      <MonsterSearch />
-
       <section className="combat-page__controls">
         <div className="combat-page__actions">
           <button
@@ -217,8 +221,9 @@ function CombatPage() {
           <button
             className="combat-page__button combat-page__button_secondary"
             type="button"
+            onClick={handleToggleMonsterSearch}
           >
-            Adicionar monstro
+            {isMonsterSearchOpen ? "Fechar busca" : "Adicionar monstro"}
           </button>
 
           <button
@@ -244,6 +249,8 @@ function CombatPage() {
           </div>
         </div>
       </section>
+
+      {isMonsterSearchOpen && <MonsterSearch />}
 
       <section className="combat-page__initiative">
         <div className="combat-page__initiative-header">
