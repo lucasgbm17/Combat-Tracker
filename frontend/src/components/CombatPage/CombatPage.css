@@ -133,6 +133,17 @@
   color: #ffffff;
 }
 
+.combat-page__empty {
+  margin: 0;
+  padding: 28px;
+  border: 1px dashed rgba(214, 177, 74, 0.35);
+  border-radius: 18px;
+  color: #cbd5e1;
+  font-size: 16px;
+  text-align: center;
+  background-color: rgba(2, 6, 23, 0.48);
+}
+
 @media screen and (max-width: 920px) {
   .combat-page {
     padding: 44px 20px;

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import Header from "../Header/Header";
 import Main from "../Main/Main";
@@ -35,8 +35,29 @@ const initialCombats = [
   },
 ];
 
+//Carregar Combates----------------------------------------------
+const COMBATS_STORAGE_KEY = "dnd-combat-tracker-combats";
+
+function getInitialCombats() {
+  const savedCombats = localStorage.getItem(COMBATS_STORAGE_KEY);
+
+  if (!savedCombats) {
+    return initialCombats;
+  }
+
+  try {
+    return JSON.parse(savedCombats);
+  } catch {
+    return initialCombats;
+  }
+}
+
 function App() {
-  const [combats, setCombats] = useState(initialCombats);
+  const [combats, setCombats] = useState(getInitialCombats);
+
+  useEffect(() => {
+    localStorage.setItem(COMBATS_STORAGE_KEY, JSON.stringify(combats));
+  }, [combats]);
 
   //Criando Combate
   function handleCreateCombat() {
@@ -55,7 +76,16 @@ function App() {
       round: 1,
     };
 
-    setCombats([newCombat, ...combats]);
+    localStorage.setItem(
+      `dnd-combat-tracker-combat-${newCombat.id}`,
+      JSON.stringify({
+        participants: [],
+        round: 1,
+        currentTurnIndex: 0,
+      }),
+    );
+
+    setCombats((currentCombats) => [newCombat, ...currentCombats]);
   }
 
   //Deletando Combate
@@ -68,7 +98,11 @@ function App() {
       return;
     }
 
-    setCombats(combats.filter((combat) => combat.id !== combatId));
+    setCombats((currentCombats) =>
+      currentCombats.filter((combat) => combat.id !== combatId),
+    );
+
+    localStorage.removeItem(`dnd-combat-tracker-combat-${combatId}`);
   }
 
   return (
@@ -89,7 +123,10 @@ function App() {
           }
         />
 
-        <Route path="/combats/:combatId" element={<CombatPage />} />
+        <Route
+          path="/combats/:combatId"
+          element={<CombatPage combats={combats} />}
+        />
 
         <Route path="/about" element={<About />} />
       </Routes>

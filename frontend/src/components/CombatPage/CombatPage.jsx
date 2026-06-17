@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import ParticipantCard from "../Cards/ParticipantCard/ParticipantCard";
 import MonsterSearch from "../MonsterSearch/MonsterSearch";
 import "./CombatPage.css";
@@ -67,11 +68,57 @@ const initialParticipants = [
   },
 ];
 
-function CombatPage() {
-  const [participants, setParticipants] = useState(initialParticipants);
-  const [currentTurnIndex, setCurrentTurnIndex] = useState(0);
-  const [round, setRound] = useState(1);
+function CombatPage({ combats }) {
+  const { combatId } = useParams();
+
+  const currentCombat = combats.find((combat) => combat.id === combatId);
+
+  const combatStorageKey = `dnd-combat-tracker-combat-${combatId}`;
+
+  //Carrregar Combates---------------------------------------------------------------------------------------------------------
+  function getInitialCombatData() {
+    const savedCombatData = localStorage.getItem(combatStorageKey);
+
+    if (!savedCombatData) {
+      return {
+        participants: [],
+        round: 1,
+        currentTurnIndex: 0,
+      };
+    }
+
+    try {
+      return JSON.parse(savedCombatData);
+    } catch {
+      return {
+        participants: [],
+        round: 1,
+        currentTurnIndex: 0,
+      };
+    }
+  }
+
+  const initialCombatData = getInitialCombatData();
+
+  const [participants, setParticipants] = useState(
+    initialCombatData.participants,
+  );
+  const [currentTurnIndex, setCurrentTurnIndex] = useState(
+    initialCombatData.currentTurnIndex,
+  );
+  const [round, setRound] = useState(initialCombatData.round);
+
   const [isMonsterSearchOpen, setIsMonsterSearchOpen] = useState(false);
+
+  useEffect(() => {
+    const combatData = {
+      participants,
+      round,
+      currentTurnIndex,
+    };
+
+    localStorage.setItem(combatStorageKey, JSON.stringify(combatData));
+  }, [participants, round, currentTurnIndex, combatStorageKey]);
 
   const sortedParticipants = [...participants].sort(
     (a, b) => b.initiative - a.initiative,
@@ -416,7 +463,9 @@ function CombatPage() {
         <div className="combat-page__heading">
           <p className="combat-page__subtitle">Controle de combate</p>
 
-          <h2 className="combat-page__title">Covil dos Lobisomens</h2>
+          <h2 className="combat-page__title">
+            {currentCombat ? currentCombat.name : "Combate"}
+          </h2>
 
           <p className="combat-page__description">
             Gerencie jogadores, monstros, pontos de vida, iniciativa e turnos em
@@ -488,17 +537,24 @@ function CombatPage() {
         </div>
 
         <div className="combat-page__initiative-list">
-          {sortedParticipants.map((participant) => (
-            <ParticipantCard
-              key={participant.id}
-              participant={participant}
-              isActive={activeParticipant?.id === participant.id}
-              onDamageParticipant={handleDamageParticipant}
-              onHealParticipant={handleHealParticipant}
-              onDeleteParticipant={handleDeleteParticipant}
-              onUpdateParticipant={handleUpdateParticipant}
-            />
-          ))}
+          {sortedParticipants.length > 0 ? (
+            sortedParticipants.map((participant) => (
+              <ParticipantCard
+                key={participant.id}
+                participant={participant}
+                isActive={activeParticipant?.id === participant.id}
+                onDamageParticipant={handleDamageParticipant}
+                onHealParticipant={handleHealParticipant}
+                onDeleteParticipant={handleDeleteParticipant}
+                onUpdateParticipant={handleUpdateParticipant}
+              />
+            ))
+          ) : (
+            <p className="combat-page__empty">
+              Nenhum participante adicionado ainda. Use os botões acima para
+              adicionar jogadores ou monstros ao combate.
+            </p>
+          )}
         </div>
       </section>
     </main>

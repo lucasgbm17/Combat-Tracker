@@ -2,6 +2,49 @@ import CombatCard from "../Cards/CombatCard/CombatCard";
 import "./Dashboard.css";
 
 function Dashboard({ combats, onCreateCombat, onDeleteCombat }) {
+  //Carregar Combates----------------------------------------------------------------------------
+  function getCombatData(combatId) {
+    const savedCombatData = localStorage.getItem(
+      `dnd-combat-tracker-combat-${combatId}`,
+    );
+
+    if (!savedCombatData) {
+      return {
+        participants: [],
+        round: 1,
+      };
+    }
+
+    try {
+      return JSON.parse(savedCombatData);
+    } catch {
+      return {
+        participants: [],
+        round: 1,
+      };
+    }
+  }
+  //--------------------------------------------------------------------------------------------------
+  function getCombatSummary(combat) {
+    const combatData = getCombatData(combat.id);
+    const participants = combatData.participants || [];
+
+    const playersCount = participants.filter(
+      (participant) => participant.type === "player",
+    ).length;
+
+    const monstersCount = participants.filter(
+      (participant) => participant.type === "monster",
+    ).length;
+
+    return {
+      ...combat,
+      participants: playersCount,
+      monsters: monstersCount,
+      round: combatData.round || 1,
+    };
+  }
+
   return (
     <main className="dashboard">
       <section className="dashboard__header">
@@ -28,7 +71,7 @@ function Dashboard({ combats, onCreateCombat, onDeleteCombat }) {
           {combats.map((combat) => (
             <CombatCard
               key={combat.id}
-              combat={combat}
+              combat={getCombatSummary(combat)}
               onDeleteCombat={onDeleteCombat}
             />
           ))}
