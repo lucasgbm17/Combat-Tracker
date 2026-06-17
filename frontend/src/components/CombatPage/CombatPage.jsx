@@ -1,72 +1,9 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import ParticipantCard from "../Cards/ParticipantCard/ParticipantCard";
+import AddPlayerModal from "../Modals/AddPlayerModal/AddPlayerModal";
 import MonsterSearch from "../MonsterSearch/MonsterSearch";
 import "./CombatPage.css";
-
-//Temporário
-const initialParticipants = [
-  {
-    id: "p1",
-    name: "Sócrates Riverdeep",
-    type: "player",
-    armorClass: 16,
-    currentHp: 72,
-    maxHp: 72,
-    initiative: 18,
-    speed: {
-      walk: 30,
-    },
-  },
-  {
-    id: "p2",
-    name: "Capa Barsavi",
-    type: "player",
-    armorClass: 18,
-    currentHp: 64,
-    maxHp: 64,
-    initiative: 15,
-    speed: {
-      walk: 30,
-    },
-  },
-  {
-    id: "p3",
-    name: "Skidbladnir",
-    type: "player",
-    armorClass: 17,
-    currentHp: 58,
-    maxHp: 58,
-    initiative: 21,
-    speed: {
-      walk: 30,
-    },
-  },
-  {
-    id: "m1",
-    name: "Werewolf",
-    type: "monster",
-    armorClass: 12,
-    currentHp: 58,
-    maxHp: 58,
-    initiative: 14,
-    speed: {
-      walk: 30,
-    },
-  },
-  {
-    id: "m2",
-    name: "Dire Wolf",
-    type: "monster",
-    armorClass: 14,
-    currentHp: 37,
-    maxHp: 37,
-    initiative: 12,
-    speed: {
-      walk: 50,
-    },
-  },
-];
 
 function CombatPage({ combats }) {
   const { combatId } = useParams();
@@ -107,8 +44,8 @@ function CombatPage({ combats }) {
     initialCombatData.currentTurnIndex,
   );
   const [round, setRound] = useState(initialCombatData.round);
-
   const [isMonsterSearchOpen, setIsMonsterSearchOpen] = useState(false);
+  const [isAddPlayerModalOpen, setIsAddPlayerModalOpen] = useState(false);
 
   useEffect(() => {
     const combatData = {
@@ -125,6 +62,15 @@ function CombatPage({ combats }) {
   );
 
   const activeParticipant = sortedParticipants[currentTurnIndex];
+
+  //Abrir/Fechar Modal---------------------------------------------------------------------------------------------------------
+  function handleOpenAddPlayerModal() {
+    setIsAddPlayerModalOpen(true);
+  }
+
+  function handleCloseAddPlayerModal() {
+    setIsAddPlayerModalOpen(false);
+  }
 
   //Abrir/Fechar Monster Search------------------------------------------------------------------------------------------------
   function handleToggleMonsterSearch() {
@@ -285,48 +231,37 @@ function CombatPage({ combats }) {
   }
 
   //Adicionar jogador-------------------------------------------------------------------------------------------
-  function handleAddPlayer() {
-    const name = window.prompt("Nome do jogador:");
-
-    if (!name || name.trim() === "") {
-      return;
-    }
-
-    const armorClass = Number(window.prompt("Classe de Armadura do jogador:"));
-    const maxHp = Number(window.prompt("HP máximo do jogador:"));
-    const initiative = Number(window.prompt("Iniciativa do jogador:"));
-    const speed = Number(window.prompt("Deslocamento do jogador:"));
-
-    if (
-      Number.isNaN(armorClass) ||
-      Number.isNaN(maxHp) ||
-      Number.isNaN(initiative) ||
-      Number.isNaN(speed) ||
-      armorClass <= 0 ||
-      maxHp <= 0 ||
-      speed <= 0
-    ) {
-      window.alert("Preencha os dados numéricos corretamente.");
-      return;
-    }
+  function handleAddPlayer(playerData) {
+    const activeParticipantId = activeParticipant?.id;
 
     const newPlayer = {
       id: `p-${Date.now()}`,
-      name: name.trim(),
+      name: playerData.name,
       type: "player",
-      armorClass,
-      currentHp: maxHp,
-      maxHp,
-      initiative,
+      armorClass: playerData.armorClass,
+      currentHp: playerData.maxHp,
+      maxHp: playerData.maxHp,
+      initiative: playerData.initiative,
       speed: {
-        walk: speed,
+        walk: playerData.speed,
       },
     };
 
-    setParticipants((currentParticipants) => [
-      ...currentParticipants,
-      newPlayer,
-    ]);
+    const updatedParticipants = [...participants, newPlayer];
+
+    const sortedUpdatedParticipants = [...updatedParticipants].sort(
+      (a, b) => b.initiative - a.initiative,
+    );
+
+    setParticipants(updatedParticipants);
+
+    if (activeParticipantId) {
+      const newActiveIndex = sortedUpdatedParticipants.findIndex(
+        (participant) => participant.id === activeParticipantId,
+      );
+
+      setCurrentTurnIndex(newActiveIndex >= 0 ? newActiveIndex : 0);
+    }
   }
 
   //Remover Participante
@@ -479,7 +414,7 @@ function CombatPage({ combats }) {
           <button
             className="combat-page__button"
             type="button"
-            onClick={handleAddPlayer}
+            onClick={handleOpenAddPlayerModal}
           >
             Adicionar jogador
           </button>
@@ -557,6 +492,11 @@ function CombatPage({ combats }) {
           )}
         </div>
       </section>
+      <AddPlayerModal
+        isOpen={isAddPlayerModalOpen}
+        onClose={handleCloseAddPlayerModal}
+        onAddPlayer={handleAddPlayer}
+      />
     </main>
   );
 }

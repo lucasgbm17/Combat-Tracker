@@ -42,7 +42,7 @@ function About() {
             <h3 className="about__card-title">Próximas fases</h3>
             <p className="about__card-text">
               Integração com API externa, criação de combates e controle de
-              participantes.
+              participantes. Concluída!!!
             </p>
           </article>
         </div>
