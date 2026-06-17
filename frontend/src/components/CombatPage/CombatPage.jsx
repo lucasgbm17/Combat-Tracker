@@ -68,7 +68,7 @@ function CombatPage() {
 
   const activeParticipant = sortedParticipants[currentTurnIndex];
 
-  //Próximo Turno
+  //Próximo Turno--------------------------------------------------------------------------------------------------------------
   function handleNextTurn() {
     if (sortedParticipants.length === 0) {
       return;
@@ -85,7 +85,7 @@ function CombatPage() {
     setCurrentTurnIndex(nextTurnIndex);
   }
 
-  //Adicionar Dano
+  //Adicionar Dano------------------------------------------------------------------------------------------------------------
   function handleDamageParticipant(participantId) {
     const damageValue = window.prompt("Digite o valor do dano:");
 
@@ -113,7 +113,7 @@ function CombatPage() {
     );
   }
 
-  //Adicionar Cura
+  //Adicionar Cura------------------------------------------------------------------------------------------------------
   function handleHealParticipant(participantId) {
     const healValue = window.prompt("Digite o valor da cura:");
 
@@ -144,6 +144,49 @@ function CombatPage() {
     );
   }
 
+  //Adicionar jogador-------------------------------------------------------------------------------------------
+  function handleAddPlayer() {
+    const name = window.prompt("Nome do jogador:");
+
+    if (!name || name.trim() === "") {
+      return;
+    }
+
+    const armorClass = Number(window.prompt("Classe de Armadura do jogador:"));
+    const maxHp = Number(window.prompt("HP máximo do jogador:"));
+    const initiative = Number(window.prompt("Iniciativa do jogador:"));
+    const speed = Number(window.prompt("Deslocamento do jogador:"));
+
+    if (
+      Number.isNaN(armorClass) ||
+      Number.isNaN(maxHp) ||
+      Number.isNaN(initiative) ||
+      Number.isNaN(speed) ||
+      armorClass <= 0 ||
+      maxHp <= 0 ||
+      speed <= 0
+    ) {
+      window.alert("Preencha os dados numéricos corretamente.");
+      return;
+    }
+
+    const newPlayer = {
+      id: `p-${Date.now()}`,
+      name: name.trim(),
+      type: "player",
+      armorClass,
+      currentHp: maxHp,
+      maxHp,
+      initiative,
+      speed,
+    };
+
+    setParticipants((currentParticipants) => [
+      ...currentParticipants,
+      newPlayer,
+    ]);
+  }
+
   return (
     <main className="combat-page">
       <section className="combat-page__hero">
@@ -163,7 +206,11 @@ function CombatPage() {
 
       <section className="combat-page__controls">
         <div className="combat-page__actions">
-          <button className="combat-page__button" type="button">
+          <button
+            className="combat-page__button"
+            type="button"
+            onClick={handleAddPlayer}
+          >
             Adicionar jogador
           </button>
 
