@@ -1,3 +1,4 @@
+import { useState } from "react";
 import "./ParticipantCard.css";
 
 function ParticipantCard({
@@ -6,13 +7,14 @@ function ParticipantCard({
   onDamageParticipant,
   onHealParticipant,
   onDeleteParticipant,
+  onUpdateParticipant,
 }) {
   const healthPercentage = Math.max(
     0,
     Math.min(100, (participant.currentHp / participant.maxHp) * 100),
   );
 
-  //Health Status
+  //Health Status Porcentagem-----------------------------------------------------------------------------------------------------------
   function getHealthStatusClass() {
     if (healthPercentage <= 10) {
       return "participant-card__health-fill_critical";
@@ -29,6 +31,67 @@ function ParticipantCard({
     return "participant-card__health-fill_light";
   }
 
+  //Editar Cartão-----------------------------------------------------------------------------------------------------------------------
+  const [editingField, setEditingField] = useState(null);
+  const [editingValue, setEditingValue] = useState("");
+
+  function startEditing(field, currentValue) {
+    setEditingField(field);
+    setEditingValue(String(currentValue));
+  }
+
+  function cancelEditing() {
+    setEditingField(null);
+    setEditingValue("");
+  }
+
+  function saveEditing() {
+    if (!editingField) {
+      return;
+    }
+
+    onUpdateParticipant(participant.id, editingField, editingValue);
+    setEditingField(null);
+    setEditingValue("");
+  }
+
+  function handleEditKeyDown(event) {
+    if (event.key === "Enter") {
+      saveEditing();
+    }
+
+    if (event.key === "Escape") {
+      cancelEditing();
+    }
+  }
+
+  function renderEditableField(field, value, className, inputType = "text") {
+    if (editingField === field) {
+      return (
+        <input
+          className={`${className} participant-card__inline-input`}
+          type={inputType}
+          value={editingValue}
+          autoFocus
+          onChange={(event) => setEditingValue(event.target.value)}
+          onBlur={saveEditing}
+          onKeyDown={handleEditKeyDown}
+        />
+      );
+    }
+
+    return (
+      <button
+        className={`${className} participant-card__editable-button`}
+        type="button"
+        onClick={() => startEditing(field, value)}
+        title="Clique para editar"
+      >
+        {value}
+      </button>
+    );
+  }
+
   return (
     <article
       className={`participant-card ${
@@ -37,7 +100,12 @@ function ParticipantCard({
     >
       <div className="participant-card__initiative">
         <span className="participant-card__initiative-number">
-          {participant.initiative}
+          {renderEditableField(
+            "initiative",
+            participant.initiative,
+            "participant-card__initiative-value",
+            "number",
+          )}
         </span>
         <span className="participant-card__initiative-label">Init</span>
       </div>
@@ -51,7 +119,13 @@ function ParticipantCard({
               {participant.type === "monster" ? "Monstro" : "Jogador"}
             </p>
 
-            <h3 className="participant-card__name">{participant.name}</h3>
+            <h3 className="participant-card__name">
+              {renderEditableField(
+                "name",
+                participant.name,
+                "participant-card__name-value",
+              )}
+            </h3>
           </div>
 
           {isActive && (
@@ -62,12 +136,26 @@ function ParticipantCard({
 
       <ul className="participant-card__stats">
         <li className="participant-card__stat participant-card__stat_shield">
-          <span>{participant.armorClass}</span>
+          <span>
+            {renderEditableField(
+              "armorClass",
+              participant.armorClass,
+              "participant-card__stat-value",
+              "number",
+            )}
+          </span>
           CA
         </li>
 
         <li className="participant-card__stat">
-          <span>{participant.speed}</span>
+          <span>
+            {renderEditableField(
+              "speed",
+              participant.speed,
+              "participant-card__stat-value",
+              "number",
+            )}
+          </span>
           Speed
         </li>
       </ul>
@@ -93,8 +181,20 @@ function ParticipantCard({
       <div className="participant-card__health">
         <div className="participant-card__health-header">
           <span>HP</span>
-          <span>
-            {participant.currentHp}/{participant.maxHp}
+          <span className="participant-card__hp-values">
+            {renderEditableField(
+              "currentHp",
+              participant.currentHp,
+              "participant-card__hp-value",
+              "number",
+            )}
+            <span className="participant-card__hp-divider">/</span>
+            {renderEditableField(
+              "maxHp",
+              participant.maxHp,
+              "participant-card__hp-value",
+              "number",
+            )}
           </span>
         </div>
 

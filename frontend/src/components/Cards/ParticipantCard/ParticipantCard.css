@@ -234,6 +234,70 @@
   color: #ffffff;
 }
 
+.participant-card__editable-button {
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-weight: inherit;
+  cursor: pointer;
+}
+
+.participant-card__editable-button:hover {
+  color: #d6b14a;
+}
+
+.participant-card__inline-input {
+  width: 100%;
+  min-width: 48px;
+  max-width: 140px;
+  padding: 4px 6px;
+  border: 1px solid rgba(214, 177, 74, 0.7);
+  border-radius: 6px;
+  background-color: rgba(2, 6, 23, 0.95);
+  color: #ffffff;
+  font: inherit;
+  font-weight: inherit;
+  outline: none;
+}
+
+.participant-card__name-value {
+  color: #ffffff;
+  font-size: 22px;
+  font-weight: 800;
+}
+
+.participant-card__initiative-value {
+  color: #271111;
+  font-size: 28px;
+  font-weight: 900;
+  text-align: center;
+}
+
+.participant-card__stat-value {
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 900;
+  text-align: center;
+}
+
+.participant-card__hp-values {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.participant-card__hp-value {
+  color: #929aa3;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.participant-card__hp-divider {
+  color: #929aa3;
+}
+
 @media screen and (max-width: 1020px) {
   .participant-card {
     grid-template-columns: 90px 1fr;

@@ -314,6 +314,86 @@ function CombatPage() {
     );
   }
 
+  //Atualizar Cartão-------------------------------------------------------------------------------------------------------------------
+  function handleUpdateParticipant(participantId, field, value) {
+    const activeParticipantId = activeParticipant?.id;
+
+    const updatedParticipants = participants.map((participant) => {
+      if (participant.id !== participantId) {
+        return participant;
+      }
+
+      if (field === "name") {
+        if (value.trim() === "") {
+          return participant;
+        }
+
+        return {
+          ...participant,
+          name: value.trim(),
+        };
+      }
+
+      const numericValue = Number(value);
+
+      if (Number.isNaN(numericValue)) {
+        return participant;
+      }
+
+      if (field === "armorClass" && numericValue <= 0) {
+        return participant;
+      }
+
+      if (field === "maxHp" && numericValue <= 0) {
+        return participant;
+      }
+
+      if (field === "currentHp" && numericValue < 0) {
+        return participant;
+      }
+
+      if (field === "speed" && numericValue < 0) {
+        return participant;
+      }
+
+      if (field === "currentHp") {
+        return {
+          ...participant,
+          currentHp: Math.min(numericValue, participant.maxHp),
+        };
+      }
+
+      if (field === "maxHp") {
+        return {
+          ...participant,
+          maxHp: numericValue,
+          currentHp: Math.min(participant.currentHp, numericValue),
+        };
+      }
+
+      return {
+        ...participant,
+        [field]: numericValue,
+      };
+    });
+
+    const sortedUpdatedParticipants = [...updatedParticipants].sort(
+      (a, b) => b.initiative - a.initiative,
+    );
+
+    setParticipants(updatedParticipants);
+
+    if (activeParticipantId) {
+      const newActiveParticipantIndex = sortedUpdatedParticipants.findIndex(
+        (participant) => participant.id === activeParticipantId,
+      );
+
+      setCurrentTurnIndex(
+        newActiveParticipantIndex >= 0 ? newActiveParticipantIndex : 0,
+      );
+    }
+  }
+
   return (
     <main className="combat-page">
       <section className="combat-page__hero">
@@ -400,6 +480,7 @@ function CombatPage() {
               onDamageParticipant={handleDamageParticipant}
               onHealParticipant={handleHealParticipant}
               onDeleteParticipant={handleDeleteParticipant}
+              onUpdateParticipant={handleUpdateParticipant}
             />
           ))}
         </div>
