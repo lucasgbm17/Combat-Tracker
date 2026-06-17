@@ -13,7 +13,9 @@ const initialParticipants = [
     currentHp: 72,
     maxHp: 72,
     initiative: 18,
-    speed: 30,
+    speed: {
+      walk: 30,
+    },
   },
   {
     id: "p2",
@@ -23,7 +25,9 @@ const initialParticipants = [
     currentHp: 64,
     maxHp: 64,
     initiative: 15,
-    speed: 30,
+    speed: {
+      walk: 30,
+    },
   },
   {
     id: "p3",
@@ -33,7 +37,9 @@ const initialParticipants = [
     currentHp: 58,
     maxHp: 58,
     initiative: 21,
-    speed: 30,
+    speed: {
+      walk: 30,
+    },
   },
   {
     id: "m1",
@@ -43,7 +49,9 @@ const initialParticipants = [
     currentHp: 58,
     maxHp: 58,
     initiative: 14,
-    speed: 30,
+    speed: {
+      walk: 30,
+    },
   },
   {
     id: "m2",
@@ -53,7 +61,9 @@ const initialParticipants = [
     currentHp: 37,
     maxHp: 37,
     initiative: 12,
-    speed: 50,
+    speed: {
+      walk: 50,
+    },
   },
 ];
 
@@ -79,20 +89,28 @@ function CombatPage() {
     return monster.armor_class?.[0]?.value || 10;
   }
 
-  function getMonsterSpeed(monster) {
-    const rawSpeed =
-      monster.speed?.walk ||
-      monster.speed?.fly ||
-      monster.speed?.swim ||
-      "30 ft.";
+  function parseSpeedValue(speedValue) {
+    if (!speedValue) {
+      return null;
+    }
 
-    const parsedSpeed = Number.parseInt(rawSpeed, 10);
+    const parsedSpeed = Number.parseInt(speedValue, 10);
 
     if (Number.isNaN(parsedSpeed)) {
-      return 30;
+      return null;
     }
 
     return parsedSpeed;
+  }
+
+  function getMonsterSpeed(monster) {
+    return {
+      walk: parseSpeedValue(monster.speed?.walk),
+      fly: parseSpeedValue(monster.speed?.fly),
+      swim: parseSpeedValue(monster.speed?.swim),
+      climb: parseSpeedValue(monster.speed?.climb),
+      burrow: parseSpeedValue(monster.speed?.burrow),
+    };
   }
 
   function handleAddMonsterFromApi(monster) {
@@ -253,7 +271,9 @@ function CombatPage() {
       currentHp: maxHp,
       maxHp,
       initiative,
-      speed,
+      speed: {
+        walk: speed,
+      },
     };
 
     setParticipants((currentParticipants) => [
@@ -349,10 +369,6 @@ function CombatPage() {
       }
 
       if (field === "currentHp" && numericValue < 0) {
-        return participant;
-      }
-
-      if (field === "speed" && numericValue < 0) {
         return participant;
       }
 

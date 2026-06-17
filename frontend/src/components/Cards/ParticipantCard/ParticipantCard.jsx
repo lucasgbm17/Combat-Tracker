@@ -91,6 +91,18 @@ function ParticipantCard({
       </button>
     );
   }
+  //---------------------------------------------------------------------------------------------------------------------
+  const speedLabels = {
+    walk: "Walk",
+    fly: "Fly",
+    swim: "Swim",
+    climb: "Climb",
+    burrow: "Burrow",
+  };
+
+  const availableSpeeds = Object.entries(participant.speed || {}).filter(
+    ([, value]) => value,
+  );
 
   return (
     <article
@@ -147,16 +159,19 @@ function ParticipantCard({
           CA
         </li>
 
-        <li className="participant-card__stat">
-          <span>
-            {renderEditableField(
-              "speed",
-              participant.speed,
-              "participant-card__stat-value",
-              "number",
-            )}
-          </span>
-          Speed
+        <li className="participant-card__stat participant-card__stat_speed">
+          <div className="participant-card__speeds">
+            {availableSpeeds.map(([speedType, speedValue]) => (
+              <div className="participant-card__speed" key={speedType}>
+                <span className="participant-card__speed-value">
+                  {speedValue}
+                </span>
+                <span className="participant-card__speed-label">
+                  {speedLabels[speedType]}
+                </span>
+              </div>
+            ))}
+          </div>
         </li>
       </ul>
 
