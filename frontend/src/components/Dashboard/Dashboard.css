@@ -73,6 +73,18 @@
   gap: 24px;
 }
 
+.dashboard__empty {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 32px;
+  border: 1px solid rgba(214, 177, 74, 0.24);
+  border-radius: 18px;
+  background-color: rgba(2, 6, 23, 0.72);
+  color: #cbd5e1;
+  font-size: 18px;
+  text-align: center;
+}
+
 @media screen and (max-width: 720px) {
   .dashboard {
     padding: 40px 20px;

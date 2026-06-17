@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import "./CombatCard.css";
 
-function CombatCard({ combat }) {
+function CombatCard({ combat, onDeleteCombat }) {
   return (
     <article className="combat-card">
       <div className="combat-card__content">
@@ -34,7 +34,11 @@ function CombatCard({ combat }) {
           Abrir combate
         </Link>
 
-        <button className="combat-card__delete-button" type="button">
+        <button
+          className="combat-card__delete-button"
+          type="button"
+          onClick={() => onDeleteCombat(combat.id)}
+        >
           Excluir
         </button>
       </div>
