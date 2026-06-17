@@ -1,0 +1,115 @@
+.monster-search {
+  max-width: 1180px;
+  margin: 20px auto;
+  padding: 28px;
+  border: 1px solid rgba(214, 177, 74, 0.24);
+  border-radius: 20px;
+  background: linear-gradient(
+    180deg,
+    rgba(42, 15, 15, 0.9),
+    rgba(0, 0, 0, 0.94)
+  );
+}
+
+.monster-search__header {
+  margin-bottom: 22px;
+  display: flex;
+  justify-content: space-between;
+  gap: 28px;
+}
+
+.monster-search__subtitle {
+  margin: 0 0 8px;
+  color: #d6b14a;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+}
+
+.monster-search__title {
+  margin: 0;
+  color: #ffffff;
+  font-size: 26px;
+}
+
+.monster-search__description {
+  max-width: 460px;
+  margin: 0;
+  color: #94a3b8;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.monster-search__form {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 22px;
+}
+
+.monster-search__input {
+  flex: 1;
+  min-height: 46px;
+  padding: 0 14px;
+  border: 1px solid rgba(148, 163, 184, 0.28);
+  border-radius: 10px;
+  background-color: rgba(2, 6, 23, 0.9);
+  color: #ffffff;
+  font-size: 15px;
+}
+
+.monster-search__button,
+.monster-search__add-button {
+  min-height: 46px;
+  padding: 0 18px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #d6b14a, #9f7928);
+  color: #111827;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.monster-search__result-label {
+  margin: 0 0 10px;
+  color: #d6b14a;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+}
+
+.monster-search__result-card {
+  padding: 18px;
+  border-radius: 14px;
+  background-color: rgba(15, 23, 42, 0.88);
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  align-items: center;
+}
+
+.monster-search__monster-name {
+  margin: 0 0 6px;
+  color: #ffffff;
+  font-size: 20px;
+}
+
+.monster-search__monster-info {
+  margin: 0;
+  color: #94a3b8;
+  font-size: 14px;
+}
+
+@media screen and (max-width: 780px) {
+  .monster-search__header,
+  .monster-search__form,
+  .monster-search__result-card {
+    flex-direction: column;
+  }
+
+  .monster-search__button,
+  .monster-search__add-button {
+    width: 100%;
+  }
+}

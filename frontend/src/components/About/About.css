@@ -1,18 +1,22 @@
 .about {
   min-height: calc(100vh - 136px);
   padding: 72px 40px;
-  background:
+  background-image:
     radial-gradient(
       circle at top right,
-      rgba(201, 162, 39, 0.12),
+      rgba(201, 162, 39, 0.5),
       transparent 28%
     ),
     radial-gradient(
       circle at bottom left,
-      rgba(127, 29, 29, 0.22),
+      rgba(127, 29, 29, 0.75),
       transparent 34%
     ),
-    #000000;
+    linear-gradient(90deg, rgba(0, 0, 0, 0.6), rgba(23, 2, 2, 0.5)),
+    url("../../images/tiamat.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .about__container {

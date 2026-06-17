@@ -1,0 +1,213 @@
+.combat-page {
+  min-height: calc(100vh - 136px);
+  padding: 64px 40px;
+  background-image:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.96), rgba(23, 2, 2, 0.82)),
+    url("../../images/combat-page.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #020617;
+}
+
+.combat-page__hero {
+  max-width: 1180px;
+  margin: 0 auto 32px;
+  display: flex;
+  justify-content: space-between;
+  gap: 32px;
+  align-items: flex-end;
+}
+
+.combat-page__heading {
+  max-width: 680px;
+}
+
+.combat-page__subtitle {
+  margin: 0 0 12px;
+  color: #d6b14a;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.combat-page__title {
+  margin: 0 0 16px;
+  color: #ffffff;
+  font-size: 46px;
+  line-height: 1.1;
+}
+
+.combat-page__description {
+  margin: 0;
+  max-width: 680px;
+  color: #cbd5e1;
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+.combat-page__status {
+  grid-column: 2;
+  grid-row: 1 / 3;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.combat-page__status-card {
+  min-height: 44px;
+  padding: 14px 14px;
+  border: 1px solid rgba(214, 177, 74, 0.28);
+  border-radius: 10px;
+  background-color: rgba(15, 23, 42, 0.88);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.combat-page__status-card_wide {
+  min-width: 220px;
+}
+
+.combat-page__status-number {
+  display: block;
+  margin-bottom: 2px;
+  color: #ffffff;
+  font-size: 17px;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.combat-page__status-text {
+  color: #94a3b8;
+  font-size: 11px;
+}
+
+.combat-page__controls {
+  max-width: 1180px;
+  margin: 20px auto 32px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 500px;
+  grid-template-rows: 1fr auto;
+  gap: 12px 24px;
+  align-items: stretch;
+}
+
+.combat-page__actions {
+  grid-column: 1;
+  grid-row: 2;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+  gap: 12px;
+  flex-wrap: wrap;
+  width: 600px;
+}
+
+.combat-page__button {
+  min-height: 34px;
+  padding: 0 16px;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #d6b14a, #9f7928);
+  color: #111827;
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.combat-page__button:hover {
+  opacity: 0.88;
+}
+
+.combat-page__button_secondary {
+  background: rgba(15, 23, 42, 0.92);
+  color: #d6b14a;
+  border: 1px solid rgba(214, 177, 74, 0.35);
+}
+
+.combat-page__button_next {
+  background: #991b1b;
+  color: #ffffff;
+}
+
+@media screen and (max-width: 920px) {
+  .combat-page__controls {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
+
+  .combat-page__actions {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  .combat-page__status {
+    grid-column: 1;
+    grid-row: auto;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto;
+  }
+}
+
+@media screen and (max-width: 620px) {
+  .combat-page__actions,
+  .combat-page__status {
+    grid-template-columns: 1fr;
+    flex-direction: column;
+  }
+
+  .combat-page__button,
+  .combat-page__status-card {
+    width: 100%;
+  }
+}
+
+.combat-page__initiative {
+  max-width: 1180px;
+  margin: 0 auto 36px;
+  padding: 28px;
+  border: 1px solid rgba(214, 177, 74, 0.2);
+  border-radius: 22px;
+  background-color: rgba(0, 0, 0, 0.66);
+}
+
+.combat-page__initiative-header {
+  margin-bottom: 22px;
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  align-items: flex-end;
+}
+
+.combat-page__initiative-subtitle {
+  margin: 0 0 8px;
+  color: #d6b14a;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+}
+
+.combat-page__section-title {
+  margin: 0;
+  color: #ffffff;
+  font-size: 26px;
+}
+
+.combat-page__counter {
+  padding: 8px 12px;
+  border: 1px solid rgba(214, 177, 74, 0.28);
+  border-radius: 999px;
+  color: #d6b14a;
+  font-size: 13px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.combat-page__initiative-list {
+  display: grid;
+  gap: 12px;
+}

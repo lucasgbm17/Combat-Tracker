@@ -1,4 +1,4 @@
-import CombatCard from "../CombatCard/CombatCard";
+import CombatCard from "../Cards/CombatCard/CombatCard";
 import "./Dashboard.css";
 
 function Dashboard() {

@@ -3,7 +3,7 @@ import Header from "../Header/Header";
 import Main from "../Main/Main";
 import Dashboard from "../Dashboard/Dashboard";
 import CombatPage from "../CombatPage/CombatPage";
-import CombatCard from "../CombatCard/CombatCard";
+import CombatCard from "../Cards/CombatCard/CombatCard";
 import About from "../About/About";
 import Footer from "../Footer/Footer";
 import "./App.css";
