@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import ParticipantCard from "../Cards/ParticipantCard/ParticipantCard";
 import AddPlayerModal from "../Modals/AddPlayerModal/AddPlayerModal";
 import HealthModal from "../Modals/HealthModal/HealthModal";
-import MonsterSearch from "../MonsterSearch/MonsterSearch";
+import MonsterSearch from "./MonsterSearch/MonsterSearch";
 import "./CombatPage.css";
 
 function CombatPage({ combats }) {
@@ -52,6 +52,23 @@ function CombatPage({ combats }) {
     mode: null,
     participantId: null,
   });
+  const [initiativeMessage, setInitiativeMessage] = useState("");
+
+  //Temporizador da Iniciativa--------------------------------------------------------------
+
+  useEffect(() => {
+    if (!initiativeMessage) {
+      return;
+    }
+
+    const timer = setTimeout(() => {
+      setInitiativeMessage("");
+    }, 5000);
+
+    return () => clearTimeout(timer);
+  }, [initiativeMessage]);
+
+  //----------------------------------------------------------------------------------------
 
   useEffect(() => {
     const combatData = {
@@ -88,10 +105,11 @@ function CombatPage({ combats }) {
   }
 
   //Monstro--------------------------------------------------------------------------------------------------------------------
+  ///Monstro CA
   function getMonsterArmorClass(monster) {
     return monster.armor_class?.[0]?.value || 10;
   }
-
+  ///Monstro Speed
   function parseSpeedValue(speedValue) {
     if (!speedValue) {
       return null;
@@ -116,21 +134,31 @@ function CombatPage({ combats }) {
     };
   }
 
+  ///Rolando iniciativa do monstro
+  function rollD20() {
+    return Math.floor(Math.random() * 20) + 1;
+  }
+
+  function getAbilityModifier(abilityScore) {
+    return Math.floor((abilityScore - 10) / 2);
+  }
+
+  function rollMonsterInitiative(monster) {
+    const initiativeRoll = rollD20();
+    const dexterityModifier = getAbilityModifier(monster.dexterity || 10);
+
+    return {
+      initiative: initiativeRoll + dexterityModifier,
+      initiativeRoll,
+      initiativeBonus: dexterityModifier,
+    };
+  }
+
+  ///Pegando monstro da API
   function handleAddMonsterFromApi(monster) {
-    const initiativeValue = window.prompt(`Iniciativa de ${monster.name}:`);
-
-    if (!initiativeValue) {
-      return;
-    }
-
-    const initiative = Number(initiativeValue);
-
-    if (Number.isNaN(initiative)) {
-      window.alert("Digite uma iniciativa válida.");
-      return;
-    }
-
     const activeParticipantId = activeParticipant?.id;
+
+    const monsterInitiative = rollMonsterInitiative(monster);
 
     const newMonster = {
       id: `m-${monster.index}-${Date.now()}`,
@@ -139,7 +167,9 @@ function CombatPage({ combats }) {
       armorClass: getMonsterArmorClass(monster),
       currentHp: monster.hit_points || 1,
       maxHp: monster.hit_points || 1,
-      initiative,
+      initiative: monsterInitiative.initiative,
+      initiativeRoll: monsterInitiative.initiativeRoll,
+      initiativeBonus: monsterInitiative.initiativeBonus,
       speed: getMonsterSpeed(monster),
       challengeRating: monster.challenge_rating,
       apiIndex: monster.index,
@@ -160,6 +190,15 @@ function CombatPage({ combats }) {
 
       setCurrentTurnIndex(newActiveIndex >= 0 ? newActiveIndex : 0);
     }
+
+    const initiativeBonusText =
+      monsterInitiative.initiativeBonus >= 0
+        ? `+${monsterInitiative.initiativeBonus}`
+        : monsterInitiative.initiativeBonus;
+
+    setInitiativeMessage(
+      `${monster.name} rolou iniciativa: ${monsterInitiative.initiativeRoll} ${initiativeBonusText} = ${monsterInitiative.initiative}`,
+    );
 
     setIsMonsterSearchOpen(false);
   }
@@ -438,7 +477,9 @@ function CombatPage({ combats }) {
             Próximo turno
           </button>
         </div>
-
+        {initiativeMessage && (
+          <p className="combat-page__initiative-message">{initiativeMessage}</p>
+        )}
         <div className="combat-page__status">
           <div className="combat-page__status-card">
             <span className="combat-page__status-number">{round}</span>

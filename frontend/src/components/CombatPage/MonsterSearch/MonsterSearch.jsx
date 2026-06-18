@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getMonsters, getMonsterByIndex } from "../../utils/dndApi";
+import { getMonsters, getMonsterByIndex } from "../../../utils/dndApi";
 import "./MonsterSearch.css";
 
 function MonsterSearch({ onAddMonster }) {

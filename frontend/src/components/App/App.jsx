@@ -60,17 +60,11 @@ function App() {
   }, [combats]);
 
   //Criando Combate
-  function handleCreateCombat() {
-    const combatName = window.prompt("Digite o nome do novo combate:");
-
-    if (!combatName || combatName.trim() === "") {
-      return;
-    }
-
+  function handleCreateCombat(combatData) {
     const newCombat = {
       id: Date.now().toString(),
-      name: combatName.trim(),
-      description: "Novo combate criado pelo Mestre.",
+      name: combatData.name,
+      description: combatData.description || "Novo combate criado pelo Mestre.",
       participants: 0,
       monsters: 0,
       round: 1,

@@ -144,6 +144,19 @@
   background-color: rgba(2, 6, 23, 0.48);
 }
 
+.combat-page__initiative-message {
+  width: fit-content;
+  margin: 16px 0 0;
+  padding: 12px 18px;
+  border: 1px solid rgba(214, 177, 74, 0.45);
+  border-radius: 12px;
+  background-color: rgba(2, 6, 23, 0.82);
+  color: #facc15;
+  font-size: 14px;
+  font-weight: 800;
+  box-shadow: 0 0 18px rgba(214, 177, 74, 0.18);
+}
+
 @media screen and (max-width: 920px) {
   .combat-page {
     padding: 44px 20px;

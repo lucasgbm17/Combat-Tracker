@@ -1,3 +1,5 @@
+import { useState } from "react";
+import CreateCombatModal from "../Modals/CreateCombatModal/CreateCombatModal";
 import CombatCard from "../Cards/CombatCard/CombatCard";
 import "./Dashboard.css";
 
@@ -23,6 +25,17 @@ function Dashboard({ combats, onCreateCombat, onDeleteCombat }) {
         round: 1,
       };
     }
+  }
+
+  //Modal de Combate----------------------------------------------------------------------------------
+  const [isCreateCombatModalOpen, setIsCreateCombatModalOpen] = useState(false);
+
+  function handleOpenCreateCombatModal() {
+    setIsCreateCombatModalOpen(true);
+  }
+
+  function handleCloseCreateCombatModal() {
+    setIsCreateCombatModalOpen(false);
   }
   //--------------------------------------------------------------------------------------------------
   function getCombatSummary(combat) {
@@ -60,7 +73,7 @@ function Dashboard({ combats, onCreateCombat, onDeleteCombat }) {
         <button
           className="dashboard__button"
           type="button"
-          onClick={onCreateCombat}
+          onClick={handleOpenCreateCombatModal}
         >
           Novo combate
         </button>
@@ -81,6 +94,11 @@ function Dashboard({ combats, onCreateCombat, onDeleteCombat }) {
           Nenhum combate criado ainda. Clique em “Novo combate” para começar.
         </p>
       )}
+      <CreateCombatModal
+        isOpen={isCreateCombatModalOpen}
+        onClose={handleCloseCreateCombatModal}
+        onCreateCombat={onCreateCombat}
+      />
     </main>
   );
 }
