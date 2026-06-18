@@ -1,0 +1,156 @@
+.health-modal {
+  display: grid;
+  gap: 20px;
+}
+
+.health-modal__target {
+  padding: 18px;
+  border: 1px solid rgba(214, 177, 74, 0.28);
+  border-radius: 14px;
+  background-color: rgba(2, 6, 23, 0.72);
+  display: grid;
+  gap: 6px;
+}
+
+.health-modal__label {
+  color: #94a3b8;
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.health-modal__name {
+  color: #ffffff;
+  font-size: 22px;
+  line-height: 1.2;
+}
+
+.health-modal__hp {
+  color: #cbd5e1;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.health-modal__field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: #cbd5e1;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.health-modal__input {
+  min-height: 48px;
+  padding: 0 14px;
+  border: 1px solid rgba(148, 163, 184, 0.32);
+  border-radius: 10px;
+  background-color: rgba(2, 6, 23, 0.92);
+  color: #ffffff;
+  font-size: 16px;
+  outline: none;
+}
+
+.health-modal__input:focus {
+  border-color: #d6b14a;
+  box-shadow: 0 0 0 3px rgba(214, 177, 74, 0.14);
+}
+
+.health-modal__input::placeholder {
+  color: #64748b;
+}
+
+.health-modal__error {
+  margin: -4px 0 0;
+  color: #fca5a5;
+  font-size: 14px;
+}
+
+.health-modal__submit-button {
+  min-height: 48px;
+  border: none;
+  border-radius: 10px;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.health-modal__submit-button_damage {
+  background: linear-gradient(135deg, #991b1b, #ef4444);
+}
+
+.health-modal__submit-button_heal {
+  background: linear-gradient(135deg, #166534, #22c55e);
+}
+
+.health-modal__submit-button:hover {
+  opacity: 0.88;
+}
+
+.modal__container_damage {
+  border-color: rgba(239, 68, 68, 0.55);
+  box-shadow:
+    0 28px 90px rgba(0, 0, 0, 0.6),
+    0 0 32px rgba(153, 27, 27, 0.35);
+  background: linear-gradient(
+    360deg,
+    rgba(127, 68, 29, 0.75),
+    rgba(0, 0, 0, 0.75)
+  );
+}
+
+.modal__container_damage::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  border-radius: 22px 22px 0 0;
+  background: linear-gradient(90deg, #7f1d1d, #ef4444);
+}
+
+.modal__container_heal {
+  border-color: rgba(34, 197, 94, 0.55);
+  box-shadow:
+    0 28px 90px rgba(0, 0, 0, 0.6),
+    0 0 32px rgba(22, 101, 52, 0.35);
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.75),
+    rgba(13, 74, 102, 0.75)
+  );
+}
+
+.modal__container_heal::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  border-radius: 22px 22px 0 0;
+  background: linear-gradient(90deg, #14532d, #22c55e);
+}
+
+.modal__title_damage {
+  color: #fca5a5;
+}
+
+.modal__title_heal {
+  color: #86efac;
+}
+
+.health-modal__target_damage {
+  border-color: rgba(239, 68, 68, 0.35);
+  background: linear-gradient(
+    135deg,
+    rgba(127, 29, 29, 0.32),
+    rgba(2, 6, 23, 0.72)
+  );
+}
+
+.health-modal__target_heal {
+  border-color: rgba(34, 197, 94, 0.35);
+  background: linear-gradient(
+    135deg,
+    rgba(20, 83, 45, 0.32),
+    rgba(2, 6, 23, 0.72)
+  );
+}

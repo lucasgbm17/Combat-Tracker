@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import ParticipantCard from "../Cards/ParticipantCard/ParticipantCard";
 import AddPlayerModal from "../Modals/AddPlayerModal/AddPlayerModal";
+import HealthModal from "../Modals/HealthModal/HealthModal";
 import MonsterSearch from "../MonsterSearch/MonsterSearch";
 import "./CombatPage.css";
 
@@ -46,6 +47,11 @@ function CombatPage({ combats }) {
   const [round, setRound] = useState(initialCombatData.round);
   const [isMonsterSearchOpen, setIsMonsterSearchOpen] = useState(false);
   const [isAddPlayerModalOpen, setIsAddPlayerModalOpen] = useState(false);
+  const [healthModal, setHealthModal] = useState({
+    isOpen: false,
+    mode: null,
+    participantId: null,
+  });
 
   useEffect(() => {
     const combatData = {
@@ -62,6 +68,10 @@ function CombatPage({ combats }) {
   );
 
   const activeParticipant = sortedParticipants[currentTurnIndex];
+
+  const selectedHealthParticipant = participants.find(
+    (participant) => participant.id === healthModal.participantId,
+  );
 
   //Abrir/Fechar Modal---------------------------------------------------------------------------------------------------------
   function handleOpenAddPlayerModal() {
@@ -172,64 +182,57 @@ function CombatPage({ combats }) {
   }
 
   //Adicionar Dano------------------------------------------------------------------------------------------------------------
-  function handleDamageParticipant(participantId) {
-    const damageValue = window.prompt("Digite o valor do dano:");
-
-    if (!damageValue) {
-      return;
-    }
-
-    const parsedDamage = Number(damageValue);
-
-    if (Number.isNaN(parsedDamage) || parsedDamage <= 0) {
-      return;
-    }
-
-    setParticipants((currentParticipants) =>
-      currentParticipants.map((participant) => {
-        if (participant.id !== participantId) {
-          return participant;
-        }
-
-        return {
-          ...participant,
-          currentHp: Math.max(0, participant.currentHp - parsedDamage),
-        };
-      }),
-    );
+  function handleOpenDamageModal(participantId) {
+    setHealthModal({
+      isOpen: true,
+      mode: "damage",
+      participantId,
+    });
   }
 
   //Adicionar Cura------------------------------------------------------------------------------------------------------
-  function handleHealParticipant(participantId) {
-    const healValue = window.prompt("Digite o valor da cura:");
+  function handleOpenHealModal(participantId) {
+    setHealthModal({
+      isOpen: true,
+      mode: "heal",
+      participantId,
+    });
+  }
 
-    if (!healValue) {
-      return;
-    }
+  function handleCloseHealthModal() {
+    setHealthModal({
+      isOpen: false,
+      mode: null,
+      participantId: null,
+    });
+  }
 
-    const parsedHeal = Number(healValue);
-
-    if (Number.isNaN(parsedHeal) || parsedHeal <= 0) {
-      return;
-    }
-
+  function handleSubmitHealthChange(amount) {
     setParticipants((currentParticipants) =>
       currentParticipants.map((participant) => {
-        if (participant.id !== participantId) {
+        if (participant.id !== healthModal.participantId) {
           return participant;
+        }
+
+        if (healthModal.mode === "damage") {
+          return {
+            ...participant,
+            currentHp: Math.max(0, participant.currentHp - amount),
+          };
         }
 
         return {
           ...participant,
           currentHp: Math.min(
             participant.maxHp,
-            participant.currentHp + parsedHeal,
+            participant.currentHp + amount,
           ),
         };
       }),
     );
-  }
 
+    handleCloseHealthModal();
+  }
   //Adicionar jogador-------------------------------------------------------------------------------------------
   function handleAddPlayer(playerData) {
     const activeParticipantId = activeParticipant?.id;
@@ -478,8 +481,8 @@ function CombatPage({ combats }) {
                 key={participant.id}
                 participant={participant}
                 isActive={activeParticipant?.id === participant.id}
-                onDamageParticipant={handleDamageParticipant}
-                onHealParticipant={handleHealParticipant}
+                onDamageParticipant={handleOpenDamageModal}
+                onHealParticipant={handleOpenHealModal}
                 onDeleteParticipant={handleDeleteParticipant}
                 onUpdateParticipant={handleUpdateParticipant}
               />
@@ -496,6 +499,13 @@ function CombatPage({ combats }) {
         isOpen={isAddPlayerModalOpen}
         onClose={handleCloseAddPlayerModal}
         onAddPlayer={handleAddPlayer}
+      />
+      <HealthModal
+        isOpen={healthModal.isOpen}
+        mode={healthModal.mode}
+        participant={selectedHealthParticipant}
+        onClose={handleCloseHealthModal}
+        onSubmit={handleSubmitHealthChange}
       />
     </main>
   );

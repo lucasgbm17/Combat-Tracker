@@ -1,6 +1,6 @@
 import "./Modal.css";
 
-function Modal({ isOpen, title, children, onClose }) {
+function Modal({ isOpen, title, children, onClose, variant = "default" }) {
   if (!isOpen) {
     return null;
   }
@@ -13,7 +13,7 @@ function Modal({ isOpen, title, children, onClose }) {
 
   return (
     <div className="modal" onMouseDown={handleOverlayClick}>
-      <div className="modal__container">
+      <div className={`modal__container modal__container_${variant}`}>
         <button
           className="modal__close-button"
           type="button"
@@ -23,7 +23,7 @@ function Modal({ isOpen, title, children, onClose }) {
           ×
         </button>
 
-        <h2 className="modal__title">{title}</h2>
+        <h2 className={`modal__title modal__title_${variant}`}>{title}</h2>
 
         {children}
       </div>
