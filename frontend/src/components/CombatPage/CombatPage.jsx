@@ -1,41 +1,37 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 import ParticipantCard from "../Cards/ParticipantCard/ParticipantCard";
 import AddPlayerModal from "../Modals/AddPlayerModal/AddPlayerModal";
 import HealthModal from "../Modals/HealthModal/HealthModal";
 import MonsterSearch from "./MonsterSearch/MonsterSearch";
+import ConfirmResetModal from "../Modals/ConfirmResetModal/ConfirmResetModal";
 import "./CombatPage.css";
 
-function CombatPage({ combats }) {
-  const { combatId } = useParams();
+const COMBAT_STORAGE_KEY = "combat-tracker-current-combat";
 
-  const currentCombat = combats.find((combat) => combat.id === combatId);
+function getInitialCombatData() {
+  const savedCombatData = localStorage.getItem(COMBAT_STORAGE_KEY);
 
-  const combatStorageKey = `dnd-combat-tracker-combat-${combatId}`;
-
-  //Carrregar Combates---------------------------------------------------------------------------------------------------------
-  function getInitialCombatData() {
-    const savedCombatData = localStorage.getItem(combatStorageKey);
-
-    if (!savedCombatData) {
-      return {
-        participants: [],
-        round: 1,
-        currentTurnIndex: 0,
-      };
-    }
-
-    try {
-      return JSON.parse(savedCombatData);
-    } catch {
-      return {
-        participants: [],
-        round: 1,
-        currentTurnIndex: 0,
-      };
-    }
+  if (!savedCombatData) {
+    return {
+      participants: [],
+      round: 1,
+      currentTurnIndex: 0,
+    };
   }
 
+  try {
+    return JSON.parse(savedCombatData);
+  } catch {
+    return {
+      participants: [],
+      round: 1,
+      currentTurnIndex: 0,
+    };
+  }
+}
+
+function CombatPage({ combats }) {
+  //Carrregar Combates---------------------------------------------------------------------------------------------------------
   const initialCombatData = getInitialCombatData();
 
   const [participants, setParticipants] = useState(
@@ -53,6 +49,7 @@ function CombatPage({ combats }) {
     participantId: null,
   });
   const [initiativeMessage, setInitiativeMessage] = useState("");
+  const [isResetModalOpen, setIsResetModalOpen] = useState(false);
 
   //Temporizador da Iniciativa--------------------------------------------------------------
 
@@ -77,8 +74,8 @@ function CombatPage({ combats }) {
       currentTurnIndex,
     };
 
-    localStorage.setItem(combatStorageKey, JSON.stringify(combatData));
-  }, [participants, round, currentTurnIndex, combatStorageKey]);
+    localStorage.setItem(COMBAT_STORAGE_KEY, JSON.stringify(combatData));
+  }, [participants, round, currentTurnIndex]);
 
   const sortedParticipants = [...participants].sort(
     (a, b) => b.initiative - a.initiative,
@@ -434,15 +431,33 @@ function CombatPage({ combats }) {
     }
   }
 
+  //Reiniciar Combate-------------------------------------------------------------------------------------------
+  function handleOpenResetModal() {
+    setIsResetModalOpen(true);
+  }
+
+  function handleCloseResetModal() {
+    setIsResetModalOpen(false);
+  }
+
+  function handleConfirmResetCombat() {
+    setParticipants([]);
+    setRound(1);
+    setCurrentTurnIndex(0);
+    setInitiativeMessage("");
+    setIsMonsterSearchOpen(false);
+    setIsResetModalOpen(false);
+
+    localStorage.removeItem(COMBAT_STORAGE_KEY);
+  }
+
   return (
     <main className="combat-page">
       <section className="combat-page__hero">
         <div className="combat-page__heading">
           <p className="combat-page__subtitle">Controle de combate</p>
 
-          <h2 className="combat-page__title">
-            {currentCombat ? currentCombat.name : "Combate"}
-          </h2>
+          <h2 className="combat-page__title">Mesa de Combate</h2>
 
           <p className="combat-page__description">
             Gerencie jogadores, monstros, pontos de vida, iniciativa e turnos em
@@ -510,9 +525,18 @@ function CombatPage({ combats }) {
             </h3>
           </div>
 
-          <span className="combat-page__counter">
-            {sortedParticipants.length} participantes
-          </span>
+          <div className="combat-page__initiative-header-actions">
+            <span className="combat-page__counter">
+              {sortedParticipants.length} participantes
+            </span>
+            <button
+              className="combat-page__reset-button"
+              type="button"
+              onClick={handleOpenResetModal}
+            >
+              Reiniciar combate
+            </button>
+          </div>
         </div>
 
         <div className="combat-page__initiative-list">
@@ -536,6 +560,7 @@ function CombatPage({ combats }) {
           )}
         </div>
       </section>
+
       <AddPlayerModal
         isOpen={isAddPlayerModalOpen}
         onClose={handleCloseAddPlayerModal}
@@ -547,6 +572,11 @@ function CombatPage({ combats }) {
         participant={selectedHealthParticipant}
         onClose={handleCloseHealthModal}
         onSubmit={handleSubmitHealthChange}
+      />
+      <ConfirmResetModal
+        isOpen={isResetModalOpen}
+        onClose={handleCloseResetModal}
+        onConfirm={handleConfirmResetCombat}
       />
     </main>
   );

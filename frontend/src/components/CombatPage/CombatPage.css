@@ -10,6 +10,8 @@
   background-color: #020617;
 }
 
+/* HERO */
+
 .combat-page__hero {
   max-width: 1180px;
   margin: 0 auto 32px;
@@ -47,43 +49,7 @@
   line-height: 1.6;
 }
 
-.combat-page__status {
-  grid-column: 2;
-  grid-row: 1 / 3;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
-}
-
-.combat-page__status-card {
-  min-height: 44px;
-  padding: 14px 14px;
-  border: 1px solid rgba(214, 177, 74, 0.28);
-  border-radius: 10px;
-  background-color: rgba(15, 23, 42, 0.88);
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.combat-page__status-card_wide {
-  min-width: 220px;
-}
-
-.combat-page__status-number {
-  display: block;
-  margin-bottom: 2px;
-  color: #ffffff;
-  font-size: 17px;
-  font-weight: 800;
-  line-height: 1.1;
-}
-
-.combat-page__status-text {
-  color: #94a3b8;
-  font-size: 11px;
-}
+/* CONTROLES */
 
 .combat-page__controls {
   max-width: 1180px;
@@ -133,16 +99,47 @@
   color: #ffffff;
 }
 
-.combat-page__empty {
-  margin: 0;
-  padding: 28px;
-  border: 1px dashed rgba(214, 177, 74, 0.35);
-  border-radius: 18px;
-  color: #cbd5e1;
-  font-size: 16px;
-  text-align: center;
-  background-color: rgba(2, 6, 23, 0.48);
+/* STATUS */
+
+.combat-page__status {
+  grid-column: 2;
+  grid-row: 1 / 3;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
 }
+
+.combat-page__status-card {
+  min-height: 44px;
+  padding: 14px;
+  border: 1px solid rgba(214, 177, 74, 0.28);
+  border-radius: 10px;
+  background-color: rgba(15, 23, 42, 0.88);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.combat-page__status-card_wide {
+  min-width: 220px;
+}
+
+.combat-page__status-number {
+  display: block;
+  margin-bottom: 2px;
+  color: #ffffff;
+  font-size: 17px;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.combat-page__status-text {
+  color: #94a3b8;
+  font-size: 11px;
+}
+
+/* MENSAGEM DE INICIATIVA */
 
 .combat-page__initiative-message {
   width: fit-content;
@@ -157,60 +154,7 @@
   box-shadow: 0 0 18px rgba(214, 177, 74, 0.18);
 }
 
-@media screen and (max-width: 920px) {
-  .combat-page {
-    padding: 44px 20px;
-  }
-
-  .combat-page__hero {
-    display: block;
-  }
-
-  .combat-page__controls {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto;
-  }
-
-  .combat-page__actions {
-    grid-column: 1;
-    grid-row: auto;
-  }
-
-  .combat-page__status {
-    grid-column: 1;
-    grid-row: auto;
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .combat-page__title {
-    font-size: 36px;
-  }
-}
-
-@media screen and (max-width: 620px) {
-  .combat-page {
-    padding: 36px 16px;
-  }
-
-  .combat-page__actions,
-  .combat-page__status {
-    grid-template-columns: 1fr;
-  }
-
-  .combat-page__button,
-  .combat-page__status-card {
-    width: 100%;
-  }
-
-  .combat-page__initiative {
-    padding: 18px;
-  }
-
-  .combat-page__initiative-header {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-}
+/* PAINEL DE INICIATIVA */
 
 .combat-page__initiative {
   max-width: 1180px;
@@ -244,6 +188,12 @@
   font-size: 26px;
 }
 
+.combat-page__initiative-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
 .combat-page__counter {
   padding: 8px 12px;
   border: 1px solid rgba(214, 177, 74, 0.28);
@@ -254,7 +204,122 @@
   white-space: nowrap;
 }
 
+.combat-page__reset-button {
+  min-height: 36px;
+  padding: 0 14px;
+  border: 1px solid rgba(248, 113, 113, 0.65);
+  border-radius: 999px;
+  background: rgba(127, 29, 29, 0.72);
+  color: #fecaca;
+  font-size: 13px;
+  font-weight: 900;
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    transform 0.2s ease,
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.combat-page__reset-button:hover {
+  transform: translateY(-2px);
+  background-color: #991b1b;
+  border-color: #fca5a5;
+  color: #ffffff;
+}
+
 .combat-page__initiative-list {
   display: grid;
   gap: 12px;
+}
+
+.combat-page__empty {
+  margin: 0;
+  padding: 28px;
+  border: 1px dashed rgba(214, 177, 74, 0.35);
+  border-radius: 18px;
+  color: #cbd5e1;
+  font-size: 16px;
+  text-align: center;
+  background-color: rgba(2, 6, 23, 0.48);
+}
+
+/* RESPONSIVO */
+
+@media screen and (max-width: 920px) {
+  .combat-page {
+    padding: 44px 20px;
+  }
+
+  .combat-page__hero {
+    display: block;
+  }
+
+  .combat-page__title {
+    font-size: 36px;
+  }
+
+  .combat-page__controls {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
+
+  .combat-page__actions {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  .combat-page__status {
+    grid-column: 1;
+    grid-row: auto;
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (max-width: 620px) {
+  .combat-page {
+    padding: 36px 16px;
+  }
+
+  .combat-page__actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .combat-page__button {
+    width: 100%;
+  }
+
+  .combat-page__status {
+    grid-template-columns: 1fr;
+  }
+
+  .combat-page__status-card {
+    width: 100%;
+  }
+
+  .combat-page__status-card_wide {
+    min-width: 0;
+  }
+
+  .combat-page__initiative {
+    padding: 18px;
+  }
+
+  .combat-page__initiative-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .combat-page__initiative-header-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .combat-page__reset-button {
+    padding: 0 12px;
+    font-size: 12px;
+  }
 }

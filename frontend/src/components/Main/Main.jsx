@@ -1,4 +1,3 @@
-import Login from "../Login/Login";
 import "./Main.css";
 
 function Main() {
@@ -25,8 +24,6 @@ function Main() {
             </li>
           </ul>
         </div>
-
-        <Login />
       </section>
     </main>
   );

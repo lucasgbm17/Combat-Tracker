@@ -8,8 +8,8 @@ function Navigation() {
         Início
       </NavLink>
 
-      <NavLink className="navigation__link" to="/dashboard">
-        Dashboard
+      <NavLink className="navigation__link" to="/combat">
+        Combate
       </NavLink>
 
       <NavLink className="navigation__link" to="/about">
