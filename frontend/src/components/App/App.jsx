@@ -6,7 +6,7 @@ import Dashboard from "../Dashboard/Dashboard";
 import CombatPage from "../CombatPage/CombatPage";
 import About from "../About/About";
 import Footer from "../Footer/Footer";
-import "./App.css";
+gi;
 
 const initialCombats = [
   {
