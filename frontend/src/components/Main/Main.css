@@ -77,10 +77,37 @@
   color: #d6b14a;
 }
 
+.main__button {
+  width: fit-content;
+  min-height: 60px;
+  padding: 0 28px;
+  border: solid 2px rgba(80, 57, 9, 0.808);
+  border-radius: 10px;
+  background: linear-gradient(135deg, #d6b14a, #9f7928);
+  color: #111827;
+  font-size: 16px;
+  font-weight: 900;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.main__button:hover {
+  transform: translateY(-2px);
+  opacity: 0.9;
+}
+
 @media screen and (max-width: 960px) {
   .main__section {
     grid-template-columns: 1fr;
     gap: 40px;
+  }
+  .main__button {
+    width: 100%;
   }
 }
 
